@@ -1,5 +1,5 @@
 ---
-name: nc-eos-scorer
+name: sw-eos-scorer
 description: Scores a business 0-100 against the EOS (Entrepreneurial Operating System) framework across the Six Key Components, using only cited evidence. Use when the user asks for an EOS checkup or how healthy the business is.
 tools: Read, Grep, Glob
 model: sonnet

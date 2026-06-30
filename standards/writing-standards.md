@@ -1,6 +1,6 @@
 ---
 type: process
-title: Writing standards (Norristown voice)
+title: Writing standards (house voice)
 ---
 
 # Writing standards

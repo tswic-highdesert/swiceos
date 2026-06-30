@@ -1,5 +1,5 @@
 ---
-name: nc-process-meeting
+name: sw-process-meeting
 description: Turn raw meeting notes or a transcript into one clean OKF meeting-note file plus a short list of action items. Use when the user shares messy notes or asks to summarize or process a meeting.
 ---
 

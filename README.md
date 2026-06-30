@@ -1,6 +1,6 @@
-# Norristown AI OS
+# SwiceOS
 
-This is a folder you open in Claude. It makes Claude work the Norristown way:
+This is a folder you open in Claude. It makes Claude work the way your team works:
 your skills, your specialists, your standards, and a few guardrails so nobody
 shoots themselves in the foot.
 

@@ -30,8 +30,8 @@ if [ "$BEFORE" != "$AFTER" ]; then
   # relink any new skills/agents into user scope (best effort)
   [ -x "$REPO/tools/link.sh" ] && "$REPO/tools/link.sh" >/dev/null 2>&1 || true
   COUNT=$(git rev-list --count "$BEFORE".."$AFTER" 2>/dev/null || echo "")
-  MSG="AI OS Updated"
-  [ -n "$COUNT" ] && MSG="AI OS Updated ($COUNT change(s))"
+  MSG="SwiceOS Updated"
+  [ -n "$COUNT" ] && MSG="SwiceOS Updated ($COUNT change(s))"
   # Surface a one-line note to the session.
   printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s"}}\n' "$MSG"
 fi

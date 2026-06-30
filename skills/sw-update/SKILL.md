@@ -1,5 +1,5 @@
 ---
-name: nc-update
+name: sw-update
 description: Safely update the shared OS to the latest version. Use when the user asks to update the AI OS or check for updates.
 ---
 
