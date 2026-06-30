@@ -22,14 +22,20 @@ name. Nothing is moved or renamed to live here, the repos keep their real names
 and their existing hosts (GitHub, Norristown Gitea, Hetzner Gitea). The OS is
 just a lens over them. Solo users skip `team/` entirely.
 
-Which repos mount where is listed in `team.manifest.json` (tracked in core).
-Each entry has a `group` tag. A machine lists the groups it belongs to in
-`local/groups` (one tag per line, private to that machine). `tools/hydrate.sh`
-reads the manifest and clones every entry whose group the machine belongs to,
-so a new person's Claude mounts exactly the repos they have access to and
-nothing else. Re-running it just fast-forwards what is already there. Access is
-ultimately enforced by each repo's host, a repo the person cannot read is
-simply skipped.
+Which repos mount where is listed in a manifest. Each entry has a `group` tag.
+A machine lists the groups it belongs to in `local/groups` (one tag per line,
+private to that machine). `tools/hydrate.sh` reads the manifest and clones every
+entry whose group the machine belongs to, so a new person's Claude mounts
+exactly the repos they have access to and nothing else. Re-running it just
+fast-forwards what is already there. Access is ultimately enforced by each
+repo's host, a repo the person cannot read is simply skipped.
+
+There are two manifests, both read by hydrate:
+- `team.manifest.json` (in core, ships to everyone): keep it generic. Never put
+  private or company repo URLs here, or they leak into the shared/open OS.
+- `local/team.manifest.json` (gitignored, private to the machine): the real
+  private repo lists live here. Same format. This is where, for example, a
+  Norristown machine lists its Norristown Gitea repos.
 
 ## local/
 Private to one machine. The user's daily work, notes, and private skills and

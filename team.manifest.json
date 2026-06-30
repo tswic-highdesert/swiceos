@@ -1,5 +1,5 @@
 {
-  "_about": "Repos to mount under team/. team/ is a mount point, not a new home: each person's Claude clones the entries whose group they belong to (see local/groups). Nothing here is moved or renamed, repos keep their real names and their existing hosts. Fill repos[] in when you are ready to slice things up; until then onboarding just sets up the OS.",
+  "_about": "Repos to mount under team/. team/ is a mount point, not a new home: each person's Claude clones the entries whose group they belong to (see local/groups). Nothing here is moved or renamed, repos keep their real names and their existing hosts. KEEP THIS FILE GENERIC: it is in core and ships to everyone, so do NOT list private/company repo URLs here. Put real private repo lists in local/team.manifest.json (gitignored, same format), so they never reach core and the OS stays open-sourceable. hydrate reads both.",
   "_schema": {
     "name": "folder name created under team/ (use the repo's real name)",
     "remote": "git URL to clone (keeps its real name and host)",
