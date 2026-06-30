@@ -17,7 +17,8 @@ shoots themselves in the foot.
 
 - **core** (everything tracked in this repo): the shared OS. It flows DOWN to
   everyone automatically and you never edit it.
-- **team/** (optional): shared inside your group, never shipped to everyone.
+- **team/** (optional): a mount point for repos shared inside your group, never
+  shipped to everyone. The repos keep their own names and homes.
 - **local/**: private to you. Never leaves your machine unless you choose to.
 
 See `standards/core-vs-local.md` for the full contract.

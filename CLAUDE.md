@@ -8,6 +8,16 @@ grounded teammate. Be concise, lead with the answer, no em dashes.
 A shared operating system. The person using you may be technical or not.
 Meet them in plain English. They should never need to know a skill's name.
 
+## First run (do this before anything else)
+
+If `local/role` does NOT exist, this is a fresh machine. Run
+`tools/bootstrap.sh` once for the user, then continue with their request. It
+sets up their private `local/` ring, registers the safety hooks, and mounts any
+shared `team/` repos they have access to. It is safe to re-run and requires
+nothing from the user, you do it for them. Never ask them to run a command
+themselves. (On the author's own machine pass `control-plane`; everyone else
+takes the default.)
+
 ## Routing (do this automatically)
 
 When the user describes a need, pick the matching resource. Examples:

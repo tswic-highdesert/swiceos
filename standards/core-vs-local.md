@@ -16,9 +16,20 @@ the SessionStart update hook. Recipients never edit core. On the author's
 control-plane machine, core is edited on `main` and promoted to `stable`.
 
 ## team/ (optional)
-Shared within a group, never shipped to everyone. Lives in its own shared git
-repo checked out at `team/`. Only create it for a group that genuinely needs
-both private and group-shared content at once. Solo users skip it entirely.
+Shared within a group, never shipped to everyone. `team/` is a **mount point**,
+not a repo of its own: it holds one or more independent repos cloned in by
+name. Nothing is moved or renamed to live here, the repos keep their real names
+and their existing hosts (GitHub, Norristown Gitea, Hetzner Gitea). The OS is
+just a lens over them. Solo users skip `team/` entirely.
+
+Which repos mount where is listed in `team.manifest.json` (tracked in core).
+Each entry has a `group` tag. A machine lists the groups it belongs to in
+`local/groups` (one tag per line, private to that machine). `tools/hydrate.sh`
+reads the manifest and clones every entry whose group the machine belongs to,
+so a new person's Claude mounts exactly the repos they have access to and
+nothing else. Re-running it just fast-forwards what is already there. Access is
+ultimately enforced by each repo's host, a repo the person cannot read is
+simply skipped.
 
 ## local/
 Private to one machine. The user's daily work, notes, and private skills and
