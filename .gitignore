@@ -1,0 +1,11 @@
+# Private and team rings never live in core
+/local/
+/team/
+
+# Never commit secrets
+*secrets.env
+*.key
+.env
+
+# Local state
+/.os-state/

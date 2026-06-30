@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Pre-push leak check on core. Blocks secrets and private markers from shipping.
+set -uo pipefail
+RANGE=$(git rev-parse --abbrev-ref HEAD)
+DIFF=$(git diff origin/"$RANGE"..HEAD 2>/dev/null || git diff HEAD~1..HEAD 2>/dev/null || echo "")
+if echo "$DIFF" | grep -Eiq '(sk-[a-z0-9]{20,}|AKIA[0-9A-Z]{12,}|-----BEGIN [A-Z ]*PRIVATE KEY-----|xox[baprs]-[0-9A-Za-z-]+)'; then
+  echo "pre-push blocked: a secret-shaped string is in this diff. Remove it before pushing." >&2
+  exit 1
+fi
+exit 0
