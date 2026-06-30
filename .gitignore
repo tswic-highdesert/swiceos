@@ -9,3 +9,6 @@
 
 # Local state
 /.os-state/
+
+# Editor config stays local
+/.vscode/
