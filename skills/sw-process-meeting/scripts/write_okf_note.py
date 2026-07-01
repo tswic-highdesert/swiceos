@@ -8,7 +8,7 @@ script does not touch them.
 
 Usage:
     python write_okf_note.py <processed.json> --slug MM-DD-YY-firstnames-topic \
-        [--company norristown] [--knowledge-dir <path>] [--date YYYY-MM-DD] \
+        [--company acme] [--knowledge-dir <path>] [--date YYYY-MM-DD] \
         [--source <relative/path/to/recording-or-transcript>] [--recording-url URL]
 """
 import argparse
@@ -101,7 +101,7 @@ def main():
     p = argparse.ArgumentParser(description="Write an OKF meeting-note")
     p.add_argument("input", help="Path to a processed JSON")
     p.add_argument("--slug", required=True, help="MM-DD-YY-firstnames-topic")
-    p.add_argument("--company", default="", help="Company-of-record tag (e.g. norristown, stategov)")
+    p.add_argument("--company", default="", help="Company-of-record tag (e.g. acme, west-division)")
     p.add_argument("--knowledge-dir", default="local/knowledge/meetings",
                    help="Base knowledge dir; the note lands under <dir>/<company>/")
     p.add_argument("--date", help="Override ISO date (else derived from slug)")

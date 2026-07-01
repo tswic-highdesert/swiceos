@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Shared config + provider resolution for the meeting pipeline.
 
-Secrets come from the environment. On Tal's machines that environment is
-injected by Infisical: run the whole pipeline under
-`infisical run --env prod -- python ...`. Never hardcode a key here. A local
-`.env` in the current directory is honored only as a fallback for machines that
-have not adopted Infisical yet.
+Secrets come from the environment. Supply them however this machine manages
+secrets: a secrets manager that injects env vars (Infisical, direnv, Doppler,
+...), the shell environment, or a local `.env` in the current directory (honored
+only as a fallback). Never hardcode a key here.
 """
 import os
 import sys
@@ -15,8 +14,8 @@ from pathlib import Path
 def load_env() -> None:
     """Best-effort: load a .env from CWD if python-dotenv is present.
 
-    Infisical-injected env vars already live in os.environ, so this is only a
-    fallback. Silently does nothing if dotenv is absent or there is no .env.
+    Env vars injected by a secrets manager already live in os.environ, so this
+    is only a fallback. Silently does nothing if dotenv is absent or no .env.
     """
     try:
         from dotenv import load_dotenv
@@ -39,7 +38,7 @@ def require_env(*names: str) -> str:
     joined = " / ".join(names)
     sys.exit(
         f"ERROR: none of these env vars are set: {joined}\n"
-        f"       Provide one (e.g. via `infisical run --env prod -- ...`)."
+        f"       Provide one via your secrets manager or shell environment."
     )
 
 

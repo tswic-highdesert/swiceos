@@ -3,5 +3,5 @@
 assemblyai        # TRANSCRIBE_PROVIDER=assemblyai (default)
 openai            # LLM_PROVIDER=openrouter (OpenAI-compatible client)
 anthropic         # LLM_PROVIDER=anthropic
-python-dotenv     # optional .env fallback when not running under `infisical run`
+python-dotenv     # optional .env fallback when secrets are not injected by a secrets manager
 # openai-whisper  # TRANSCRIBE_PROVIDER=whisper-local — heavy (pulls torch); install only if used

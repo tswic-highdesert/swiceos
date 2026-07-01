@@ -28,10 +28,12 @@ once into an isolated venv, then run the pipeline with that interpreter:
 
 ## Secrets
 
-Never hardcode a key. The scripts read provider keys from the environment; on
-Tal's machines that is injected by Infisical. Run the pipeline under:
-`infisical run --env prod -- python scripts/<script>.py ...`. As a fallback the
-scripts also load a `.env` from the working directory if one is present.
+Never hardcode a key. The scripts read provider keys from the environment, so
+supply them however this machine manages secrets:
+- a secrets manager that injects env vars (e.g. `infisical run -- python ...`,
+  `direnv`, `doppler run --`), or
+- your shell environment, or
+- a `.env` file in the working directory (loaded automatically as a fallback).
 
 ## Providers (swappable, good defaults)
 
@@ -56,17 +58,17 @@ Skips if the WAV already exists.
 Emits a speaker-labeled transcript. Preserve this JSON — it costs $ to redo.
 
 ### Step 3 — LLM analysis
-`python scripts/process_transcript.py transcripts/<stem>.json --out processed/<stem>.json [--attendees "Tal,Garth"] [--roster "Tal,Garth,..."]`
+`python scripts/process_transcript.py transcripts/<stem>.json --out processed/<stem>.json [--attendees "Alice,Bob"] [--roster "Alice,Bob,Carol,..."]`
 - Pass `--attendees` when you know the room (filename, calendar, context). It
   resolves speakers the transcript never names aloud.
 - Pass `--roster` with a workspace's common names so close matches snap to the
-  canonical spelling. The roster is company config — supply it from the calling
+  canonical spelling. The roster is workspace config — supply it from the calling
   context/extension pack, it is NOT baked into the prompt.
 - **Watch the speaker map.** The script prints `Speakers: A=Name, B=Name` on
   success, or `⚠ SPEAKER MAPPING WARNINGS`. Most damaging silent error is a
-  **vocative** ("Garth, just so I know…" means the *listener* is Garth) or a
-  fully-inverted 2-speaker map. Cross-check against a known fact (who owns/built
-  the thing being discussed). Fix the processed JSON before Step 4.
+  **vocative** ("Sam, just so I know…" means the *listener* is Sam, not the
+  speaker) or a fully-inverted 2-speaker map. Cross-check against a known fact
+  (who owns/built the thing being discussed). Fix the processed JSON before Step 4.
 
 ### Step 4 — Write the OKF note (canonical deliverable)
 `python scripts/write_okf_note.py processed/<stem>.json --slug MM-DD-YY-firstnames-topic --company <tag> --source <provenance-path> [--recording-url URL]`
@@ -91,18 +93,15 @@ regenerable — delete it. Do not publish anything; this writes to `local/` only
 - **whisper-local has no diarization** — `diarized: false` flows into the
   processed `_meta`. Speaker separation will be weak; lean on `--attendees`.
 
-## Extension packs (company-specific steps)
+## Extension packs (org-specific steps)
 
-This core skill stops at the OKF note. Company-specific behavior plugs in via
-extension directives, kept in that company's `team/` repo, NOT here:
-
-- `team/norristown/extensions/process-meeting/` — portco-of-record tagging,
-  AI-in-Action flagging, Skool/YouTube publishing, portco-wiki feed.
-- `team/stategov/extensions/process-meeting/` — the `beta-feedback/<slug>.md`
-  product-concerns doc that feeds the StateGov app backlog.
+This core skill stops at the OKF note. Anything specific to one organization —
+publishing the recording, tagging a company-of-record, generating a custom
+feedback doc — lives in that group's `team/<company>/extensions/process-meeting/`
+directory, NOT here. Keeping it out of core is what makes the skill universal.
 
 **Hook points** (run the matching extension directives if present):
-- `post-transcript` — after Step 3 (e.g. AI-in-Action time check).
-- `post-note` — after Step 4 (tagging, publishing, feedback docs).
+- `post-transcript` — after Step 3 (e.g. classify or flag the meeting).
+- `post-note` — after Step 4 (e.g. tag, publish, or derive a follow-on doc).
 
 Follow `standards/writing-standards.md` everywhere (no em dashes).

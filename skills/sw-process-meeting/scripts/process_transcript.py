@@ -13,7 +13,7 @@ runtime via --roster / --attendees, never hardcoded here.
 Usage:
     python process_transcript.py <transcript.json> --out <processed.json>
         [--provider openrouter|anthropic] [--model ID]
-        [--attendees "Tal,Garth"] [--roster "Tal,Garth,Misty,..."]
+        [--attendees "Alice,Bob"] [--roster "Alice,Bob,Carol,..."]
 """
 import argparse
 import json
@@ -39,7 +39,7 @@ Return ONLY valid JSON with these fields:
     {"name": "real name (or 'Unknown (Speaker X)' if unmappable)", "role_context": "their role or why they were mentioned", "speaker_label": "transcript label (A, B, ...) if this person spoke, else null"}
   ],
   "speaker_map": {"A": "real name", "B": "real name", "...": "..."},
-  "suggested_filename": "firstname-firstname-main-topic (kebab-case, no date — first names of IDENTIFIED attendees + 2-3 word topic, e.g. 'tal-james-ai-onboarding'; if an attendee could not be identified, omit them rather than writing 'unknown')"
+  "suggested_filename": "firstname-firstname-main-topic (kebab-case, no date — first names of IDENTIFIED attendees + 2-3 word topic, e.g. 'alice-bob-project-kickoff'; if an attendee could not be identified, omit them rather than writing 'unknown')"
 }
 
 Be thorough but concise. Extract every action item — even implicit ones. For people, include anyone mentioned by name.
@@ -54,10 +54,10 @@ The transcript prefixes every utterance with a speaker label (e.g. "A:", "B:", "
 label to a real name and populate the "speaker_map" field. A name spoken aloud plays one of two roles — tell them apart:
 
   1. DIRECT ADDRESS (vocative) — the speaker is talking TO someone by name.
-     Examples: "Garth, just so I know...", "Thanks, Tal.", "...you know what I mean, Garth?", "Hey Rusty—"
+     Examples: "Sam, just so I know...", "Thanks, Alex.", "...you know what I mean, Sam?", "Hey Carol—"
      A vocative name belongs to the LISTENER (the OTHER speaker), NOT the one currently talking.
   2. REFERENCE — the speaker is talking ABOUT someone in the third person.
-     Examples: "Chris is the CFO", "I'll ask Cody about that." A referenced name usually belongs to a
+     Examples: "Dana is the CFO", "I'll ask Chris about that." A referenced name usually belongs to a
      non-speaker, or to a speaker described in third person — it does NOT identify the current speaker.
 
 A speaker almost never says their own name. So when label B's utterance contains a name, that is overwhelmingly
