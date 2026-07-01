@@ -37,6 +37,11 @@ There are two manifests, both read by hydrate:
   private repo lists live here. Same format. This is where, for example, a
   Norristown machine lists its Norristown Gitea repos.
 
+Repos mount at `team/<group>/<name>`, so each team gets its own folder. A team
+can carry its own operating context (workflows, secrets-manager pointer, tools,
+standards) in a `team/<team>/CLAUDE.md` held by a "home" repo mounted at the
+team root. See `standards/team-context.md`.
+
 ## local/
 Private to one machine. The user's daily work, notes, and private skills and
 agents. Its own private git repo (so it is backed up and synced) but never

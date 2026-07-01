@@ -1,13 +1,15 @@
 {
-  "_about": "Repos to mount under team/. team/ is a mount point, not a new home: each person's Claude clones the entries whose group they belong to (see local/groups). Nothing here is moved or renamed, repos keep their real names and their existing hosts. KEEP THIS FILE GENERIC: it is in core and ships to everyone, so do NOT list private/company repo URLs here. Put real private repo lists in local/team.manifest.json (gitignored, same format), so they never reach core and the OS stays open-sourceable. hydrate reads both.",
+  "_about": "Repos to mount under team/. team/ is a mount point, not a new home: each person's Claude clones the entries whose group they belong to (see local/groups). Repos mount at team/<group>/<name>, so each team gets its own folder. Nothing here is moved or renamed, repos keep their real names and their existing hosts. KEEP THIS FILE GENERIC: it is in core and ships to everyone, so do NOT list private/company repo URLs here. Put real private repo lists in local/team.manifest.json (gitignored, same format), so they never reach core and the OS stays open-sourceable. hydrate reads both.",
   "_schema": {
-    "name": "folder name created under team/ (use the repo's real name)",
+    "name": "folder name under team/<group>/ (use the repo's real name)",
     "remote": "git URL to clone (keeps its real name and host)",
-    "group": "access tag; only machines whose local/groups lists this group will clone it. Omit for everyone."
+    "group": "access tag; only machines whose local/groups lists this group clone it. Omit for everyone (mounts flat at team/<name>).",
+    "home": "optional bool. true = mount this repo at the team root team/<group>/ instead of a subfolder, so it can carry team/<group>/CLAUDE.md and team standards that apply across the whole team. One home repo per group. It is cloned first; it should gitignore the sibling repo folders."
   },
   "_example": [
-    { "name": "stategov", "remote": "git@github.com:tswic-highdesert/stategov.git", "group": "stategov" },
-    { "name": "portfolio-wiki-acme", "remote": "ssh://git@samson-1.tail7839d6.ts.net:2222/norristown/portfolio-wiki-acme.git", "group": "norristown" }
+    { "name": "norristown-home", "remote": "ssh://git@samson-1.tail7839d6.ts.net:2222/Norristown/norristown-home.git", "group": "norristown", "home": true },
+    { "name": "whitecap", "remote": "ssh://git@samson-1.tail7839d6.ts.net:2222/Norristown/whitecap.git", "group": "norristown" },
+    { "name": "stategov", "remote": "git@github.com:tswic-highdesert/stategov.git", "group": "stategov" }
   ],
   "repos": []
 }
