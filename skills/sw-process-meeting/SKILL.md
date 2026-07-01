@@ -20,11 +20,18 @@ feedback docs) are NOT in here — they live in extension packs (see the bottom)
   summary + action items yourself and hand `write_okf_note.py` a minimal
   processed JSON. Do not fabricate a transcript.
 
+## Setup
+
+The scripts need a few Python packages (see `scripts/requirements.txt`). Install
+once into an isolated venv, then run the pipeline with that interpreter:
+`uv venv .venv && uv pip install --python .venv/bin/python -r scripts/requirements.txt`.
+
 ## Secrets
 
 Never hardcode a key. The scripts read provider keys from the environment; on
 Tal's machines that is injected by Infisical. Run the pipeline under:
-`infisical run --env prod -- python scripts/<script>.py ...`.
+`infisical run --env prod -- python scripts/<script>.py ...`. As a fallback the
+scripts also load a `.env` from the working directory if one is present.
 
 ## Providers (swappable, good defaults)
 
