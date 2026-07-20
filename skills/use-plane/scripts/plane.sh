@@ -52,17 +52,15 @@ load_secrets() {
     fi
   fi
 
-  # 2) Infisical (norristown project). Requires a prior `infisical login`.
-  #    Project resolves from .infisical.json (via `infisical init`) or
-  #    INFISICAL_PROJECT_ID in the environment.
+  # 2) Infisical `plane` project. Requires a prior `infisical login`.
+  #    Override the project with INFISICAL_PROJECT_ID if needed.
   if command -v infisical >/dev/null 2>&1; then
-    local iargs=(secrets get PLANE_API_KEY --env prod --plain --silent)
-    [[ -n "${INFISICAL_PROJECT_ID:-}" ]] && iargs+=(--projectId "$INFISICAL_PROJECT_ID")
-    PLANE_API_KEY=$(infisical "${iargs[@]}" 2>/dev/null || true)
+    local pid="${INFISICAL_PROJECT_ID:-1ba095ee-74e8-4c10-9917-4915f23144df}"
+    PLANE_API_KEY=$(infisical secrets get PLANE_API_KEY --env prod --plain --silent --projectId "$pid" 2>/dev/null || true)
     [[ -n "$PLANE_API_KEY" ]] && return 0
   fi
 
-  die "PLANE_API_KEY not found. Export it, install the age vault, or log in to Infisical (norristown project) and retry."
+  die "PLANE_API_KEY not found. Export it, install the age vault, or log in to Infisical (plane project) and retry."
 }
 
 # --- low-level request ------------------------------------------------------

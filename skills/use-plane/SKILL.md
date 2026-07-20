@@ -54,9 +54,9 @@ this order:
    2. the age vault `[plane]` section, if this machine has
       `~/.config/age/key.txt` and `~/secrets/secrets.env.age` (Tal's machine);
    3. Infisical: `infisical secrets get PLANE_API_KEY --env prod --plain`
-      against the norristown project (requires a prior `infisical login`;
-      project comes from `.infisical.json` or `INFISICAL_PROJECT_ID`).
-      This is the path on machines without the age vault (Garth's machine).
+      against the `plane` project (id baked into the script; override with
+      `INFISICAL_PROJECT_ID`). Requires a prior `infisical login`. This is
+      the path on machines without the age vault (Garth's machine).
 
 Never hardcode, echo, or paste the PAT. To point at a different Plane instance,
 export `PLANE_BASE_URL`, `PLANE_WORKSPACE`, and `PLANE_API_KEY` before calling
