@@ -12,3 +12,11 @@
 
 # Editor config stays local
 /.vscode/
+
+# Scratch and generated artifacts that must never be committed (2026-07-26:
+# an accidental `git add -A` swept meeting transcripts into a public repo).
+.tmp/
+__pycache__/
+*.pyc
+/et_*.html
+/profile.html
